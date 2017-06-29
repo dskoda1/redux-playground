@@ -2,7 +2,6 @@ import React, { PropTypes, Component } from 'react';
 
 import { IconMenu, MenuItem, MoreVertIcon, IconButton } from 'material-ui';
 
-
 export default class LoggedIn extends Component {
   render() {
     const { logoutAction, user } = this.props;

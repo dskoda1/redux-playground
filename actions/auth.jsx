@@ -1,14 +1,16 @@
 import * as types from '../constants/Auth';
 
-export function login(user, password) {
+export function login(payload) {
+  console.log(payload)
+
   return {
     type: types.LOGIN,
-    user,
-    password
+    user: payload.user,
+    password: payload.password
   }
 }
 
-export function register(user, password) {
+export function register(payload) {
   return {
     type: types.REGISTER,
     user,

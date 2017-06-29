@@ -16,7 +16,7 @@ const rawBaseTheme = {
     alternateTextColor: Colors.white,
     canvasColor: Colors.white,
     borderColor: Colors.grey300,
-    disabledColor: fade(Colors.darkBlack, 0.3)
+    disabledColor: fade(Colors.darkBlack, 0.3),
   }
 };
 

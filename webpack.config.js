@@ -13,12 +13,12 @@ module.exports = {
   module: {
     preLoaders: [
         //Eslint loader
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: "eslint-loader"},
+      // { test: /\.jsx?$/, exclude: /node_modules/, loader: "eslint-loader"},
     ],
     loaders: [
       { test: /\.html$/, loader: "file?name=[name].[ext]" },
       { test: /\.css$/, loader: "file?name=[name].[ext]" },
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["react-hot","babel-loader"]},
+      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["react-hot-loader/webpack","babel-loader"]},
     ],
   },
   resolve: {

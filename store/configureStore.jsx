@@ -1,6 +1,7 @@
 import rootReducer from '../reducers';
 import { combineReducers, compose, createStore, applyMiddleware } from 'redux';
 import { routerForBrowser, initializeCurrentLocation } from 'redux-little-router';
+import { reducer as formReducer } from 'redux-form'
 
 // Define your routes in a route-to-anything hash like below.
 // The value of the route key can be any serializable data,
@@ -10,20 +11,16 @@ import { routerForBrowser, initializeCurrentLocation } from 'redux-little-router
 // tree when its corresponding route is matched and dispatched.
 // Useful for page titles and other route-specific data.
 const routes = {
+  '/': {
+    title: 'Home'
+  },
   '/login': {
     title: 'Login'
   },
   '/register': {
     title: 'Register'
   },
-  // You can also define nested route objects!
-  // Just make sure each route key starts with a slash.
-  '/': {
-    title: 'Home'
-  }
 };
-
-
 
 export default function configureStore(initialState) {
   const {
@@ -36,7 +33,8 @@ export default function configureStore(initialState) {
   })
   const reducers = combineReducers({
     router: reducer,
-    root: rootReducer
+    root: rootReducer,
+    form: reducer
   })
 
   const store = createStore(

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'redux-little-router';
 
 import App from '../containers/App';
 import configureStore from '../store/configureStore';
@@ -19,7 +20,9 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <RouterProvider store={store}>
+      <App />
+    </RouterProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,17 +1,17 @@
 import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'redux-little-router'
 
 import * as AuthActions from '../actions/auth';
 import LoggedIn from '../components/LoggedIn';
-// import LoggedOut from '../components/LoggedOut';
+import LoggedOut from '../components/LoggedOut';
 
 import {
   AppBar,
   RaisedButton
 } from 'material-ui';
-import { IconMenu, MenuItem, MoreVertIcon, IconButton } from 'material-ui';
-
+import { IconMenu, MenuItem, IconButton } from 'material-ui';
 
 const defaultStyle = {
   margin: 20,
@@ -19,36 +19,26 @@ const defaultStyle = {
 }
 
 
-class LoggedOut extends Component {
-  static muiName = 'IconMenu';
-
-  render() {
-    return (
-      <IconMenu
-        iconButtonElement={
-          <IconButton><MoreVertIcon /></IconButton>
-        }
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-      >
-        <MenuItem primaryText="Login" />
-        <MenuItem primaryText="Register" />
-        <MenuItem primaryText="Sign out" />
-      </IconMenu>
-    )
-  }
-}
-
 class NavBar extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.loginAction = this.loginAction.bind(this);
+    this.dispatchLoginRoute = this.dispatchLoginRoute.bind(this);
+    this.dispatchRegisterRoute = this.dispatchRegisterRoute.bind(this);
   }
 
   loginAction() {
     const { actions } = this.props;
     actions.login('user', 'pass');
+  }
+
+  dispatchLoginRoute() {
+    this.props.dispatch(push('/login'))
+  }
+
+  dispatchRegisterRoute() {
+    this.props.dispatch(push('/register'))
   }
 
   render() {
@@ -57,6 +47,8 @@ class NavBar extends Component {
       <header className="header">
         <AppBar
           title="Redux Playground"
+          showMenuIconButton={false}
+          onTitleTouchTap={() => this.props.dispatch(push('/'))}
           iconElementRight={
             auth.loggedIn
             ?
@@ -66,8 +58,8 @@ class NavBar extends Component {
               />
             :
               <LoggedOut
-                loginAction={this.loginAction}
-                registerAction={actions.register}
+                loginClickAction={this.dispatchLoginRoute}
+                registerClickAction={this.dispatchRegisterRoute}
               />
           }
         />
@@ -77,7 +69,9 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -88,7 +82,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(AuthActions, dispatch)
+    actions: bindActionCreators(AuthActions, dispatch),
+    dispatch: dispatch
   };
 }
 
